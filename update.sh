@@ -35,7 +35,7 @@ sed -e 's,%%ALPINE_VERSION%%,'"${versions[alpine]}"',' \
     -e 's,%%REVISION%%,'"${versions[rev]}"',' \
     -e 's,%%PKGOSSCHECKSUM%%,'"${versions[pkgosschecksum]}"',' \
     -e 's,%%BUILDTARGET%%,'"${versions[buildtarget]}"',' \
-    "Dockerfile-alpine-slim.template" >> "src/Dockerfile"
+    "src/Dockerfile.template" >> "src/Dockerfile"
 
 # Copy scripts to target directory
 cp -a entrypoint/*.sh entrypoint/*.envsh "src/"
