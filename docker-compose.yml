@@ -1,5 +1,6 @@
 services:
   searxng:
+    build: .
     image: best-nginx:latest
     container_name: best-nginx
     restart: always

@@ -17,12 +17,7 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         curl \
         perl \
-    && apk add --no-cache \
-        libmaxminddb-dev \
         wget
-
-# Fetch and verify NGINX signing key
-RUN wget -qO /etc/apk/keys/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.key
 
 RUN mkdir -p /var/log/nginx \
     && mkdir -p /var/cache/nginx \
@@ -106,14 +101,9 @@ FROM alpine:3.20
 # Install runtime dependencies
 RUN apk add --no-cache \
         libmaxminddb \
-        zlib \
-        openssl \
-        libxml2 \
     && apk add --no-cache --virtual .runtime-deps \
-        curl \
         perl \
-        pcre2 \
-        zlib
+        pcre2
 
 # Copy NGINX binaries and configuration from the build stage
 COPY --from=build /etc/nginx /etc/nginx
