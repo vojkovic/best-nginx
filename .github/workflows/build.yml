@@ -37,11 +37,3 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}/best-nginx:latest
           platforms: linux/amd64,linux/arm64
-
-      - name: Scan Docker image for vulnerabilities
-        uses: docker/scan-action@v1
-        with:
-          image: ghcr.io/${{ github.repository }}/best-nginx:latest
-
-      - name: Logout from GitHub Container Registry
-        run: docker logout ghcr.io
