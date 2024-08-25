@@ -1,0 +1,9 @@
+services:
+  searxng:
+    image: best-nginx:latest
+    container_name: best-nginx
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
