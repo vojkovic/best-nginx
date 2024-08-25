@@ -17,6 +17,8 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         curl \
         perl \
+    && apk add --no-cache \
+        libmaxminddb-dev \
         wget
 
 RUN mkdir -p /var/log/nginx \
