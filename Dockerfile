@@ -17,6 +17,7 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         curl \
         perl \
+        ninja \
     && apk add --no-cache \
         libmaxminddb-dev \
         wget
@@ -46,9 +47,13 @@ RUN mkdir out \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=installed .. \
     && cmake --build . --config Release --target brotlienc
 
-# Download quictls (openssl fork with QUIC support)
+# Download boringssl
 WORKDIR /usr/src/nginx
-RUN git clone --depth 1 --recursive https://github.com/quictls/openssl.git
+RUN git clone --depth 1 --recursive https://github.com/google/boringssl \
+    && mkdir boringssl/build \
+    && cd boringssl/build \
+    && cmake -GNinja -B build -DCMAKE_BUILD_TYPE=Release .. \
+    && ninja -j$(nproc) -C build
 
 # Configure and build NGINX
 WORKDIR /usr/src/nginx
@@ -69,7 +74,8 @@ RUN ./configure \
     --add-module=./ngx_brotli \
     --add-module=./ngx_http_geoip2_module \
     --add-module=./headers-more-nginx-module \
-    --with-openssl=./openssl \
+    --with-cc-opt="-I../modules/boringssl/include $(CFLAGS)" \
+    --with-ld-opt="-L../modules/boringssl/build/ssl -L../modules/boringssl/build/crypto $(LDFLAGS)" \
     --with-http_v3_module \
     --with-http_v2_module \
     --without-select_module \
