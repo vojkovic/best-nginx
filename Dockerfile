@@ -70,6 +70,8 @@ RUN ./configure \
     --add-module=./ngx_http_geoip2_module \
     --add-module=./headers-more-nginx-module \
     --with-openssl=./openssl \
+    --with-http_v3_module \
+    --with-http_v2_module \
     --without-select_module \
     --without-poll_module \
     --without-http_access_module \
