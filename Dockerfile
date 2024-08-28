@@ -67,6 +67,7 @@ RUN ./configure \
     --pid-path=/var/run/nginx.pid \
     --user=nginx \
     --group=nginx \
+    --with-http_sub_module \
     --with-http_ssl_module \
     --with-pcre-jit \
     --with-threads \
