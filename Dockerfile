@@ -68,6 +68,7 @@ RUN ./configure \
     --user=nginx \
     --group=nginx \
     --with-http_sub_module \
+    --with-http_realip_module \
     --with-http_ssl_module \
     --with-pcre-jit \
     --with-threads \
